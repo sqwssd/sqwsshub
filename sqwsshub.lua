@@ -7,6 +7,7 @@ local localPlayer = Players.LocalPlayer
 local OBBY_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/wallhop_pro.lua"
 local BRAINROTS_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/wallhop_brainrot.lua"
 local LUCKYBLOCK_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/lucky_block.lua"
+local COLORORDIE_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/color_or_die.lua"
 local function cleanupAll()
     local names = {"SqwssHub", "ObbyHub", "MinimalistHub"}
     for _, name in ipairs(names) do
@@ -103,7 +104,7 @@ local startPos = nil
 local function updateInput(input)
     local delta = input.Position - dragStart
     local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    TweenService:Create(MainFrame, TweenInfo.new(0.08, Enum.EasingStyle.OutQuad), {Position = position}):Play()
+    TweenService:Create(MainFrame, TweenInfo.new(0.08, Enum.EasingStyle.Quad), {Position = position}):Play()
 end
 MainFrame.InputBegan:Connect(function(input)
     if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and not UserInputService:GetFocusedTextBox() then
@@ -323,6 +324,7 @@ end)
 addGameCard("Become a Wallhop Pro Obby", "Auto Pass 94 Stages, Stage Teleport, WalkSpeed, JumpPower, InfJump.", {74171266895367}, OBBY_URL)
 addGameCard("Wall Hop for Brainrots!", "Fly, Platform Spawner, Infinite Jump, Auto Sell, Auto Rebirth, Smart Platforms Teleports.", {138154148141430}, BRAINROTS_URL)
 addGameCard("Kick a Lucky Block", "Fly, Platform Spawner, Infinite Jump, Speed, Auto Sell, Auto Rebirth.", {89469502395769}, LUCKYBLOCK_URL)
+addGameCard("Color or Die 🎨", "Item ESP (Paint, Brushes, Tools), Monster Highlight, Teleports, Speed, Jump, Fly, Noclip.", {12931609417}, COLORORDIE_URL)
 local guiVisible = true
 local function toggleGui()
     guiVisible = not guiVisible
