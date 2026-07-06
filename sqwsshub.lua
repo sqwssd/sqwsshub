@@ -3,11 +3,16 @@ local UserInputService = game:GetService("UserInputService")
 local CoreGui = game:GetService("CoreGui")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
+
 local localPlayer = Players.LocalPlayer
+
 local OBBY_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/wallhop_pro.lua"
 local BRAINROTS_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/wallhop_brainrot.lua"
 local LUCKYBLOCK_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/lucky_block.lua"
 local COLORORDIE_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/color_or_die.lua"
+local MM2_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/mm2_hub.lua"
+local FLING_URL = "https://raw.githubusercontent.com/sqwssd/RobloxScripts/main/fling_gui.lua"
+
 local function cleanupAll()
     local names = {"SqwssHub", "ObbyHub", "MinimalistHub"}
     for _, name in ipairs(names) do
@@ -18,11 +23,13 @@ local function cleanupAll()
     end
 end
 cleanupAll()
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "SqwssHub"
 ScreenGui.ResetOnSpawn = false
 local parent = (game:GetService("RunService"):IsStudio() or not pcall(function() local x = CoreGui.Name end)) and localPlayer:WaitForChild("PlayerGui") or CoreGui
 ScreenGui.Parent = parent
+
 local ToggleButton = Instance.new("TextButton")
 ToggleButton.Size = UDim2.new(0, 46, 0, 46)
 ToggleButton.Position = UDim2.new(0, 20, 0.5, -23)
@@ -34,13 +41,16 @@ ToggleButton.Font = Enum.Font.GothamBold
 ToggleButton.TextSize = 22
 ToggleButton.ZIndex = 10
 ToggleButton.Parent = ScreenGui
+
 local TBCorner = Instance.new("UICorner")
 TBCorner.CornerRadius = UDim.new(0.5, 0)
 TBCorner.Parent = ToggleButton
+
 local TBStroke = Instance.new("UIStroke")
 TBStroke.Color = Color3.fromRGB(48, 50, 60)
 TBStroke.Thickness = 1.5
 TBStroke.Parent = ToggleButton
+
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 460, 0, 320)
 MainFrame.Position = UDim2.new(0.5, -230, 0.5, -160)
@@ -49,33 +59,83 @@ MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.ClipsDescendants = true
 MainFrame.Parent = ScreenGui
+
 local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 10)
 MainCorner.Parent = MainFrame
+
 local MainStroke = Instance.new("UIStroke")
 MainStroke.Color = Color3.fromRGB(40, 42, 52)
 MainStroke.Thickness = 1.2
 MainStroke.Parent = MainFrame
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 20, 0, 20)
+CloseBtn.Position = UDim2.new(1, -30, 0, 10)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(244, 67, 54)
+CloseBtn.Text = "×"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.TextSize = 14
+CloseBtn.Parent = MainFrame
+
+local CBCorner = Instance.new("UICorner")
+CBCorner.CornerRadius = UDim.new(0.5, 0)
+CBCorner.Parent = CloseBtn
+
+CloseBtn.MouseButton1Click:Connect(function()
+    cleanupAll()
+end)
+
+local MinBtn = Instance.new("TextButton")
+MinBtn.Size = UDim2.new(0, 20, 0, 20)
+MinBtn.Position = UDim2.new(1, -55, 0, 10)
+MinBtn.BackgroundColor3 = Color3.fromRGB(48, 50, 60)
+MinBtn.Text = "-"
+MinBtn.TextColor3 = Color3.fromRGB(240, 240, 245)
+MinBtn.Font = Enum.Font.GothamBold
+MinBtn.TextSize = 14
+MinBtn.Parent = MainFrame
+
+local MBCorner = Instance.new("UICorner")
+MBCorner.CornerRadius = UDim.new(0.5, 0)
+MBCorner.Parent = MinBtn
+
+local guiVisible = true
+local function toggleGui()
+    guiVisible = not guiVisible
+    MainFrame.Visible = guiVisible
+    ToggleButton.Text = guiVisible and "★" or "☰"
+end
+
+MinBtn.MouseButton1Click:Connect(function()
+    toggleGui()
+end)
+
 local Sidebar = Instance.new("Frame")
 Sidebar.Size = UDim2.new(0, 130, 1, 0)
 Sidebar.BackgroundColor3 = Color3.fromRGB(15, 16, 20)
 Sidebar.BorderSizePixel = 0
 Sidebar.Parent = MainFrame
+
 local SidebarCorner = Instance.new("UICorner")
 SidebarCorner.CornerRadius = UDim.new(0, 10)
 SidebarCorner.Parent = Sidebar
+
 local SidebarPatch = Instance.new("Frame")
 SidebarPatch.Size = UDim2.new(0, 15, 1, 0)
 SidebarPatch.Position = UDim2.new(1, -15, 0, 0)
 SidebarPatch.BackgroundColor3 = Color3.fromRGB(15, 16, 20)
 SidebarPatch.BorderSizePixel = 0
 SidebarPatch.Parent = Sidebar
+
 local Separator = Instance.new("Frame")
 Separator.Size = UDim2.new(0, 1, 1, 0)
 Separator.Position = UDim2.new(1, 0, 0, 0)
 Separator.BackgroundColor3 = Color3.fromRGB(40, 42, 52)
 Separator.BorderSizePixel = 0
 Separator.Parent = Sidebar
+
 local Logo = Instance.new("TextLabel")
 Logo.Size = UDim2.new(1, 0, 0, 50)
 Logo.BackgroundTransparency = 1
@@ -84,28 +144,34 @@ Logo.TextColor3 = Color3.fromRGB(255, 255, 255)
 Logo.Font = Enum.Font.GothamBold
 Logo.TextSize = 14
 Logo.Parent = Sidebar
+
 local TabContainer = Instance.new("Frame")
 TabContainer.Size = UDim2.new(1, 0, 1, -55)
 TabContainer.Position = UDim2.new(0, 0, 0, 50)
 TabContainer.BackgroundTransparency = 1
 TabContainer.Parent = Sidebar
+
 local TabList = Instance.new("UIListLayout")
 TabList.Parent = TabContainer
 TabList.SortOrder = Enum.SortOrder.LayoutOrder
 TabList.Padding = UDim.new(0, 4)
+
 local ContentArea = Instance.new("Frame")
 ContentArea.Size = UDim2.new(1, -145, 1, -15)
 ContentArea.Position = UDim2.new(0, 137, 0, 10)
 ContentArea.BackgroundTransparency = 1
 ContentArea.Parent = MainFrame
+
 local dragToggle = nil
 local dragStart = nil
 local startPos = nil
+
 local function updateInput(input)
     local delta = input.Position - dragStart
     local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     TweenService:Create(MainFrame, TweenInfo.new(0.08, Enum.EasingStyle.Quad), {Position = position}):Play()
 end
+
 MainFrame.InputBegan:Connect(function(input)
     if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and not UserInputService:GetFocusedTextBox() then
         dragToggle = true
@@ -119,11 +185,13 @@ MainFrame.InputBegan:Connect(function(input)
         end)
     end
 end)
+
 UserInputService.InputChanged:Connect(function(input)
     if dragToggle and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
         updateInput(input)
     end
 end)
+
 local tabs = {}
 local function createTab(tabName, displayName)
     local Page = Instance.new("Frame")
@@ -172,13 +240,16 @@ local function createTab(tabName, displayName)
         ActiveBar.Visible = true
     end)
 end
+
 createTab("Games", "Select Game")
 createTab("About", "Info")
+
 tabs["Games"].Page.Visible = true
 tabs["Games"].Button.TextColor3 = Color3.fromRGB(66, 133, 244)
 tabs["Games"].Button.BackgroundTransparency = 0
 tabs["Games"].Button.BackgroundColor3 = Color3.fromRGB(30, 31, 39)
 tabs["Games"].ActiveBar.Visible = true
+
 local SearchBar = Instance.new("TextBox")
 SearchBar.Size = UDim2.new(1, -10, 0, 32)
 SearchBar.Position = UDim2.new(0, 0, 0, 0)
@@ -191,9 +262,11 @@ SearchBar.PlaceholderColor3 = Color3.fromRGB(100, 102, 110)
 SearchBar.Font = Enum.Font.GothamMedium
 SearchBar.TextSize = 12
 SearchBar.Parent = tabs["Games"].Page
+
 local SBCorner = Instance.new("UICorner")
 SBCorner.CornerRadius = UDim.new(0, 6)
 SBCorner.Parent = SearchBar
+
 local SBSearchIcon = Instance.new("TextLabel")
 SBSearchIcon.Size = UDim2.new(0, 30, 1, 0)
 SBSearchIcon.Position = UDim2.new(1, -30, 0, 0)
@@ -203,6 +276,7 @@ SBSearchIcon.TextColor3 = Color3.fromRGB(120, 122, 130)
 SBSearchIcon.Font = Enum.Font.GothamMedium
 SBSearchIcon.TextSize = 12
 SBSearchIcon.Parent = SearchBar
+
 local GameScroll = Instance.new("ScrollingFrame")
 GameScroll.Size = UDim2.new(1, 0, 1, -40)
 GameScroll.Position = UDim2.new(0, 0, 0, 40)
@@ -211,10 +285,12 @@ GameScroll.BorderSizePixel = 0
 GameScroll.ScrollBarThickness = 3
 GameScroll.ScrollBarImageColor3 = Color3.fromRGB(66, 133, 244)
 GameScroll.Parent = tabs["Games"].Page
+
 local GameScrollList = Instance.new("UIListLayout")
 GameScrollList.Parent = GameScroll
 GameScrollList.SortOrder = Enum.SortOrder.LayoutOrder
 GameScrollList.Padding = UDim.new(0, 6)
+
 local AboutTitle = Instance.new("TextLabel")
 AboutTitle.Size = UDim2.new(1, 0, 0, 30)
 AboutTitle.BackgroundTransparency = 1
@@ -224,6 +300,7 @@ AboutTitle.Font = Enum.Font.GothamBold
 AboutTitle.TextSize = 18
 AboutTitle.TextXAlignment = Enum.TextXAlignment.Left
 AboutTitle.Parent = tabs["About"].Page
+
 local AboutText = Instance.new("TextLabel")
 AboutText.Size = UDim2.new(1, 0, 1, -40)
 AboutText.Position = UDim2.new(0, 0, 0, 35)
@@ -235,6 +312,7 @@ AboutText.TextSize = 13
 AboutText.TextXAlignment = Enum.TextXAlignment.Left
 AboutText.TextYAlignment = Enum.TextYAlignment.Top
 AboutText.Parent = tabs["About"].Page
+
 local cards = {}
 local function addGameCard(gameName, desc, placeIds, url)
     local Frame = Instance.new("Frame")
@@ -311,6 +389,7 @@ local function addGameCard(gameName, desc, placeIds, url)
     
     table.insert(cards, {Frame = Frame, Title = gameName})
 end
+
 SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
     local q = string.lower(SearchBar.Text)
     for _, card in ipairs(cards) do
@@ -321,17 +400,16 @@ SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
         end
     end
 end)
+
 addGameCard("Become a Wallhop Pro Obby", "Auto Pass 94 Stages, Stage Teleport, WalkSpeed, JumpPower, InfJump.", {74171266895367}, OBBY_URL)
 addGameCard("Wall Hop for Brainrots!", "Fly, Platform Spawner, Infinite Jump, Auto Sell, Auto Rebirth, Smart Platforms Teleports.", {138154148141430}, BRAINROTS_URL)
 addGameCard("Kick a Lucky Block", "Fly, Platform Spawner, Infinite Jump, Speed, Auto Sell, Auto Rebirth.", {89469502395769}, LUCKYBLOCK_URL)
 addGameCard("Color or Die 🎨", "Item ESP (Paint, Brushes, Tools), Monster Highlight, Teleports, Speed, Jump, Fly, Noclip.", {12931609417}, COLORORDIE_URL)
-local guiVisible = true
-local function toggleGui()
-    guiVisible = not guiVisible
-    MainFrame.Visible = guiVisible
-    ToggleButton.Text = guiVisible and "★" or "☰"
-end
+addGameCard("Murder Mystery 2 ⚔️", "ESP (Murderer, Sheriff, Dropped Gun), Teleports, Auto-Hit Murderer (Silent Aim), Kill All.", {142823291}, MM2_URL)
+addGameCard("Universal Fling Tool 🌀", "Select players from an auto-updating list and fling them out of the map.", {}, FLING_URL)
+
 ToggleButton.MouseButton1Click:Connect(toggleGui)
+
 UserInputService.InputBegan:Connect(function(input, processed)
     if not processed then
         if input.KeyCode == Enum.KeyCode.Insert or input.KeyCode == Enum.KeyCode.RightShift then
